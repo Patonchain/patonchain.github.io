@@ -113,71 +113,99 @@
     }
     .transition-overlay canvas { width: 100%; height: 100%; }
 
-    /* Terminal section */
-    .terminal-section {
-      position: fixed; top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 3; opacity: 0;
-      display: flex; align-items: center;
-      justify-content: center;
+    /* ===== CRT terminal — final screen ===== */
+    .crt-wrap {
+      position: fixed; inset: 0; z-index: 3; opacity: 0;
+      display: flex; align-items: center; justify-content: center;
       pointer-events: none;
     }
-    .terminal-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      max-width: 860px; width: 90%;
-      pointer-events: auto;
+    .crt {
+      position: relative;
+      width: min(720px, 90vw);
+      pointer-events: none;
+      border-radius: 22px / 16px;
+      background:
+        radial-gradient(120% 130% at 50% 30%, #10241b 0%, #0a120d 60%, #060a07 100%);
+      padding: 30px clamp(22px, 4vw, 40px);
+      box-shadow:
+        0 0 0 2px rgba(8,16,12,0.9),
+        0 0 0 9px #0c0f0d,
+        0 26px 80px rgba(0,0,0,0.7),
+        0 0 90px rgba(78,255,170,0.10);
+      transform: scaleY(0.006);
+      transform-origin: center;
+      filter: brightness(2.6) saturate(1.4);
+      transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1), filter 0.7s ease-out;
     }
-    .term-card {
-      background: rgba(20, 55, 95, 0.82);
-      border: 1px solid rgba(84, 160, 232, 0.25);
-      border-radius: 6px;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-      backdrop-filter: blur(12px);
+    .crt.on { transform: scaleY(1); filter: brightness(1) saturate(1); }
+
+    .crt-screen {
+      position: relative;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: clamp(11px, 1.5vw, 14px);
+      line-height: 1.9;
+      color: #4dffab;
+      text-shadow: 0 0 4px rgba(77,255,171,0.55), 0 0 14px rgba(77,255,171,0.22);
+      min-height: 384px;
     }
-    .term-card.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .cl {
+      opacity: 0; transform: translateX(-7px);
+      transition: opacity 0.22s ease-out, transform 0.22s ease-out;
+      white-space: pre-wrap; pointer-events: auto;
     }
-    .term-card--wide { grid-column: 1 / -1; }
-    .term-header {
-      background: rgba(15, 42, 75, 0.9);
-      padding: 8px 12px;
-      display: flex; align-items: center; gap: 6px;
-      border-bottom: 1px solid rgba(84, 160, 232, 0.15);
+    .cl.show { opacity: 1; transform: none; }
+    .cl.sp { height: 0.85em; }
+    .cl .usr { color: #79ffce; }
+    .cl .pth { color: #36b884; }
+    .cl .cmd { color: #daffef; }
+    .cl.out { color: #2fce86; text-shadow: 0 0 4px rgba(47,206,134,0.4); }
+    .cl.out b { color: #b6ffe0; font-weight: 600; }
+    .cl .lnk {
+      color: #93ffd6; text-decoration: none;
+      border-bottom: 1px solid rgba(120,255,200,0.32);
+      transition: color 0.15s ease, border-color 0.15s ease;
     }
-    .term-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .term-dot--red { background: #ff5f57; }
-    .term-dot--yellow { background: #febc2e; }
-    .term-dot--green { background: #28c840; }
-    .term-header span {
-      margin-left: 8px; font-size: 10px;
-      color: rgba(84, 160, 232, 0.5);
+    .cl .lnk:hover { color: #eafff6; border-bottom-color: #eafff6; }
+    .crt-cursor {
+      display: inline-block; width: 0.55em; height: 1em;
+      background: #4dffab; box-shadow: 0 0 9px rgba(77,255,171,0.75);
+      vertical-align: -0.15em;
+      animation: crtblink 1.05s step-end infinite;
     }
-    .term-body {
-      padding: 16px; font-size: 12px;
-      line-height: 1.7; color: #8a9ab4;
-      min-height: 100px;
+    @keyframes crtblink { 50% { opacity: 0; } }
+
+    /* scanlines */
+    .crt-scan {
+      position: absolute; inset: 0; border-radius: inherit; z-index: 4;
+      pointer-events: none; opacity: 0.5;
+      background: repeating-linear-gradient(0deg,
+        rgba(0,0,0,0) 0 2px, rgba(0,0,0,0.34) 2px 4px);
+      animation: scanmove 8s linear infinite;
     }
-    .term-body .prompt { color: #54a0e8; }
-    .term-body .cmd { color: #d4e8fa; }
-    .term-body .output { color: rgba(84, 160, 232, 0.45); }
-    .term-body .highlight { color: #7ec8f0; }
-    .term-body .accent { color: #a8d8ff; }
-    .term-body .link { color: #7ec8f0; text-decoration: none; border-bottom: 1px solid rgba(126,200,240,0.4); }
-    .term-body .link:hover { color: #d4e8fa; border-bottom-color: #d4e8fa; }
-    .term-body .cursor {
-      display: inline-block;
-      width: 7px; height: 14px;
-      background: #54a0e8;
-      vertical-align: text-bottom;
-      animation: blink 1s step-end infinite;
+    @keyframes scanmove { to { background-position: 0 -160px; } }
+
+    /* curved glass: vignette + corner darkening + phosphor flicker */
+    .crt-glass {
+      position: absolute; inset: 0; border-radius: inherit; z-index: 5;
+      pointer-events: none;
+      background:
+        radial-gradient(130% 130% at 50% 50%,
+          rgba(120,255,200,0.05) 0%, rgba(0,0,0,0) 42%, rgba(0,0,0,0.55) 100%);
+      box-shadow:
+        inset 0 0 70px rgba(0,0,0,0.7),
+        inset 0 0 16px rgba(78,255,170,0.12);
+      animation: flicker 5s steps(48) infinite;
     }
-    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes flicker {
+      0%,100% { opacity: 1; } 3% { opacity: 0.84; } 5% { opacity: 1; }
+      47% { opacity: 0.97; } 48% { opacity: 0.78; } 49% { opacity: 1; }
+      72% { opacity: 0.92; } 73% { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .crt-scan, .crt-glass, .crt-cursor { animation: none; }
+      .crt { transition: opacity 0.3s ease-out; }
+    }
   </style>
 </head>
 <body>
@@ -217,56 +245,27 @@
   <canvas id="canvas-transition"></canvas>
 </div>
 
-<div class="terminal-section" id="terminal-section">
-  <div class="terminal-grid">
-
-    <div class="term-card" data-reveal="0">
-      <div class="term-header">
-        <div class="term-dot term-dot--red"></div>
-        <div class="term-dot term-dot--yellow"></div>
-        <div class="term-dot term-dot--green"></div>
-        <span>~/whoami</span>
-      </div>
-      <div class="term-body">
-        <span class="prompt">$</span> <span class="cmd">whoami</span><br>
-        <span class="highlight">Patrick Santiago</span><br>
-        <span class="output">Founder &amp; operator. Co-founder, </span><span class="accent">Accelr8</span><br>
-        <span class="output">Profiled in </span><span class="highlight">New York Magazine</span>
-      </div>
+<div class="crt-wrap" id="crt-wrap">
+  <div class="crt" id="crt">
+    <div class="crt-screen">
+      <div class="cl"     data-l="0"><span class="usr">santiago@accelr8</span>:<span class="pth">~</span>$ <span class="cmd">whoami</span></div>
+      <div class="cl out" data-l="1">Patrick Santiago &mdash; founder &amp; operator</div>
+      <div class="cl out" data-l="2">co-founder, Accelr8 &middot; profiled in <b>New York Magazine</b></div>
+      <div class="cl sp"  data-l="3"></div>
+      <div class="cl"     data-l="4"><span class="usr">santiago@accelr8</span>:<span class="pth">~</span>$ <span class="cmd">cat accelr8.stats</span></div>
+      <div class="cl out" data-l="5"><b>200+</b> events&nbsp;&nbsp;&nbsp;&nbsp;<b>40,000+</b> attendees</div>
+      <div class="cl out" data-l="6"><b>178</b> alumni founders&nbsp;&nbsp;&nbsp;&nbsp;<b>$100M+</b> raised</div>
+      <div class="cl out" data-l="7">4 buildings &middot; 206 rooms &middot; San Francisco</div>
+      <div class="cl sp"  data-l="8"></div>
+      <div class="cl"     data-l="9"><span class="usr">santiago@accelr8</span>:<span class="pth">~</span>$ <span class="cmd">./connect</span></div>
+      <div class="cl out" data-l="10">email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="lnk" href="mailto:pat@joinaccelr8.com">pat@joinaccelr8.com</a></div>
+      <div class="cl out" data-l="11">linkedin&nbsp;&nbsp;<a class="lnk" href="https://www.linkedin.com/in/patonchain/">/in/patonchain</a></div>
+      <div class="cl out" data-l="12">luma&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="lnk" href="https://luma.com/user/patonchain">/user/patonchain</a></div>
+      <div class="cl out" data-l="13">accelr8&nbsp;&nbsp;&nbsp;<a class="lnk" href="https://joinaccelr8.com">joinaccelr8.com</a></div>
+      <div class="cl"     data-l="14"><span class="usr">santiago@accelr8</span>:<span class="pth">~</span>$ <span class="crt-cursor"></span></div>
     </div>
-
-    <div class="term-card" data-reveal="1">
-      <div class="term-header">
-        <div class="term-dot term-dot--red"></div>
-        <div class="term-dot term-dot--yellow"></div>
-        <div class="term-dot term-dot--green"></div>
-        <span>~/accelr8</span>
-      </div>
-      <div class="term-body">
-        <span class="prompt">$</span> <span class="cmd">cat stats.log</span><br>
-        <span class="accent">200+</span> <span class="output">events &nbsp;</span><span class="accent">40k+</span> <span class="output">attendees</span><br>
-        <span class="accent">178</span> <span class="output">alumni founders &nbsp;</span><span class="accent">$100M+</span> <span class="output">raised</span><br>
-        <span class="output">4 buildings &nbsp; 206 rooms &nbsp; San Francisco</span>
-      </div>
-    </div>
-
-    <div class="term-card term-card--wide" data-reveal="2">
-      <div class="term-header">
-        <div class="term-dot term-dot--red"></div>
-        <div class="term-dot term-dot--yellow"></div>
-        <div class="term-dot term-dot--green"></div>
-        <span>~/connect</span>
-      </div>
-      <div class="term-body">
-        <span class="prompt">$</span> <span class="cmd">./connect</span><br>
-        <span class="output">&rarr; email &nbsp;&nbsp;&nbsp;</span><a href="mailto:pat@joinaccelr8.com" class="link">pat@joinaccelr8.com</a><br>
-        <span class="output">&rarr; linkedin </span><a href="https://www.linkedin.com/in/patonchain/" class="link">linkedin.com/in/patonchain</a><br>
-        <span class="output">&rarr; luma &nbsp;&nbsp;&nbsp;&nbsp;</span><a href="https://luma.com/user/patonchain" class="link">luma.com/user/patonchain</a><br>
-        <span class="output">&rarr; accelr8 &nbsp;</span><a href="https://joinaccelr8.com" class="link">joinaccelr8.com</a><br>
-        <span class="prompt">$</span> <span class="cursor"></span>
-      </div>
-    </div>
-
+    <div class="crt-scan"></div>
+    <div class="crt-glass"></div>
   </div>
 </div>
 
@@ -307,8 +306,9 @@ const pillarRight = document.querySelector('.pillar--right');
 const contentLayer = document.querySelector('.content-layer');
 const archwaySection = document.getElementById('archway-section');
 const blueBgSection = document.getElementById('blue-bg-section');
-const terminalSection = document.getElementById('terminal-section');
-const termCards = document.querySelectorAll('.term-card');
+const crtWrap = document.getElementById('crt-wrap');
+const crtEl = document.getElementById('crt');
+const crtLines = document.querySelectorAll('.cl');
 
 // Phase boundaries
 const PILLAR_END = 0.25;
@@ -345,6 +345,39 @@ grad.addColorStop(0.5, '#54a0e8');
 grad.addColorStop(1, '#509ae2');
 blueCtx.fillStyle = grad;
 blueCtx.fillRect(0, 0, 64, 64);
+
+// --- Portal source: animated procedural ASCII tunnel (rushing rings + noise) ---
+const portalSource = document.createElement('canvas');
+portalSource.width = 220; portalSource.height = 132;
+const pCtx = portalSource.getContext('2d', { willReadFrequently: true });
+
+function drawPortal(t, intensity, rush) {
+  const w = portalSource.width, h = portalSource.height;
+  const img = pCtx.createImageData(w, h), d = img.data;
+  const cx = w / 2, cy = h / 2, maxR = Math.hypot(cx, cy);
+  const spin = t * 0.6;
+  const noiseAmt = 0.5 + 0.85 * intensity;     // heavy grain, grows with intensity
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const dx = x - cx, dy = y - cy;
+      let r = Math.hypot(dx, dy) / maxR; if (r < 1e-4) r = 1e-4;
+      const ang = Math.atan2(dy, dx);
+      // rings that rush outward (accelerate with rush) + 4 spiral arms
+      const tunnel = Math.sin((1.0 / (r + 0.05)) * 5.0 - t * (3.0 + rush * 6.0) + ang * 4.0 + spin);
+      let v = 0.5 + 0.5 * tunnel;
+      v *= Math.pow(1.0 - Math.min(r, 1.0), 0.5);   // fall off toward edges
+      v += Math.max(0, 0.42 - r) * 1.7;             // bright collapsing core
+      v += (Math.random() - 0.5) * noiseAmt;        // grain
+      v = Math.max(0, Math.min(1, v)) * intensity;
+      const i = (y * w + x) * 4;
+      d[i]     = v * 88 * (1.0 - r * 0.6);          // cold blue/cyan
+      d[i + 1] = v * 205;
+      d[i + 2] = v * 255;
+      d[i + 3] = 255;
+    }
+  }
+  pCtx.putImageData(img, 0, 0);
+}
 
 const vsSource = `#version 300 es
   in vec2 a_position;
@@ -549,76 +582,12 @@ const blueRenderer = createAsciiRenderer(
   0.0, 1.0, 0.0, 1.6, 0.9, 0.0
 );
 
-// --- Transition overlay: spiral + grain ---
-const transCanvas = document.getElementById('canvas-transition');
-const transCtx = transCanvas.getContext('2d');
+// --- Transition overlay: WebGL ASCII portal (reuses the proven ASCII shader) ---
 const transOverlay = document.getElementById('transition-overlay');
-
-function resizeTransCanvas() {
-  transCanvas.width = window.innerWidth;
-  transCanvas.height = window.innerHeight;
-}
-resizeTransCanvas();
-window.addEventListener('resize', resizeTransCanvas);
-
-function drawTransition(progress) {
-  // progress 0→1 = transition intensity (peaks at 0.5, fades)
-  const w = transCanvas.width, h = transCanvas.height;
-  const cx = w / 2, cy = h / 2;
-  transCtx.clearRect(0, 0, w, h);
-
-  // Spiral warp — radial lines rotating
-  const spiralAngle = progress * Math.PI * 3;
-  const spiralRadius = Math.max(w, h) * 0.8;
-  const numArms = 6;
-
-  transCtx.save();
-  transCtx.translate(cx, cy);
-  transCtx.rotate(spiralAngle);
-
-  for (let i = 0; i < numArms; i++) {
-    const angle = (i / numArms) * Math.PI * 2;
-    const armWidth = 0.15 + progress * 0.3;
-
-    transCtx.beginPath();
-    transCtx.moveTo(0, 0);
-    // Spiral arm with curve
-    for (let r = 0; r < spiralRadius; r += 4) {
-      const t = r / spiralRadius;
-      const a = angle + t * Math.PI * 1.5 * progress;
-      const x = Math.cos(a) * r;
-      const y = Math.sin(a) * r;
-      transCtx.lineTo(x, y);
-    }
-    transCtx.strokeStyle = `rgba(84, 160, 232, ${0.08 * progress})`;
-    transCtx.lineWidth = 2 + progress * 8;
-    transCtx.stroke();
-  }
-  transCtx.restore();
-
-  // Film grain overlay
-  const imageData = transCtx.getImageData(0, 0, w, h);
-  const data = imageData.data;
-  const grainIntensity = progress * 80;
-
-  for (let i = 0; i < data.length; i += 16) { // skip pixels for perf
-    const noise = (Math.random() - 0.5) * grainIntensity;
-    // Apply blue-tinted grain
-    data[i] = Math.min(255, Math.max(0, data[i] + noise * 0.3));      // R
-    data[i+1] = Math.min(255, Math.max(0, data[i+1] + noise * 0.6));  // G
-    data[i+2] = Math.min(255, Math.max(0, data[i+2] + noise));         // B
-    data[i+3] = Math.min(255, Math.max(0, Math.abs(noise) * 2.5));     // A
-  }
-  transCtx.putImageData(imageData, 0, 0);
-
-  // Radial blur vignette — dark edges pulling inward
-  const radGrad = transCtx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.5);
-  radGrad.addColorStop(0, 'rgba(84, 160, 232, 0)');
-  radGrad.addColorStop(0.6, `rgba(84, 160, 232, ${progress * 0.1})`);
-  radGrad.addColorStop(1, `rgba(20, 60, 100, ${progress * 0.5})`);
-  transCtx.fillStyle = radGrad;
-  transCtx.fillRect(0, 0, w, h);
-}
+const portalRenderer = createAsciiRenderer(
+  document.getElementById('canvas-transition'), portalSource,
+  0.0, 1.0, 0.07, 1.7, 1.45, 0.0
+);
 
 charsetSelect.addEventListener('change', () => {
   ASCII_CHARS = CHARSETS[charsetSelect.value];
@@ -627,6 +596,7 @@ charsetSelect.addEventListener('change', () => {
   rightRenderer.updateAtlas();
   archwayRenderer.updateAtlas();
   blueRenderer.updateAtlas();
+  portalRenderer.updateAtlas();
   needsDraw = true;
 });
 
@@ -737,9 +707,10 @@ function render() {
 
   // Set opacity: during slide/archway phase use archwayOpacity, during zoom use fadeout
   const transIntensity = zoomProgress > 0 ? Math.sin(zoomProgress * Math.PI) : 0;
-  transOverlay.style.opacity = transIntensity;
+  transOverlay.style.opacity = Math.min(transIntensity * 1.3, 1);
   if (transIntensity > 0.01) {
-    drawTransition(transIntensity);
+    drawPortal(performance.now() / 1000, transIntensity, easedZoom);
+    portalRenderer.draw();
   }
 
   const swapPoint = 0.6;
@@ -757,18 +728,17 @@ function render() {
   }
   blueBgSection.style.opacity = blueFadeIn;
 
-  // === Phase 5: Terminal cards over blue ASCII ===
+  // === Phase 5: CRT terminal boots over the blue ASCII ===
   const termProgress = Math.max(0, Math.min((currentProgress - ZOOM_END) / (1.0 - ZOOM_END), 1));
 
-  terminalSection.style.opacity = Math.min(termProgress * 2.5, 1);
+  crtWrap.style.opacity = Math.min(termProgress * 3.5, 1);
+  if (termProgress > 0.02) crtEl.classList.add('on');
+  else crtEl.classList.remove('on');
 
-  termCards.forEach((card, i) => {
-    const cardStart = 0.08 + i * 0.18;
-    if (termProgress > cardStart) {
-      card.classList.add('visible');
-    } else {
-      card.classList.remove('visible');
-    }
+  // Boot the lines in sequence as you scroll (cursor line lands last)
+  const revealCount = Math.floor(termProgress * (crtLines.length + 1.5));
+  crtLines.forEach((line, i) => {
+    line.classList.toggle('show', i < revealCount);
   });
 
   // Resize pillar canvases during push
