@@ -7,12 +7,20 @@
   <meta name="description" content="Patrick Santiago, founder and operator. Co-founder of Accelr8, building San Francisco's AI founder community.">
   <meta property="og:title" content="Patrick Santiago">
   <meta property="og:description" content="Founder and operator. Co-founder of Accelr8, building SF's AI founder community.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --crt: 'VT323', ui-monospace, monospace;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --disp: 'Space Grotesk', system-ui, sans-serif;
+    }
     body {
       background: #0a0a0c;
       color: #e8e8e0;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--mono);
     }
     .scroll-container { height: 800vh; }
 
@@ -46,13 +54,17 @@
       pointer-events: auto;
     }
     .content-inner h2 {
-      font-size: 1.2rem; font-weight: 400;
-      margin-bottom: 16px; opacity: 0;
+      font-family: var(--crt);
+      font-size: clamp(46px, 10vw, 104px); font-weight: 400; letter-spacing: 3px;
+      margin-bottom: 6px; opacity: 0; color: #dCEBFF; line-height: 0.95;
+      text-shadow: 0 0 18px rgba(84,160,232,0.6), 0 0 46px rgba(84,160,232,0.32);
       transition: opacity 1s ease-out;
     }
     .content-inner p {
-      font-size: 0.7rem; color: #666;
-      line-height: 1.8; opacity: 0;
+      font-family: var(--mono);
+      font-size: clamp(11px, 1.35vw, 13px); color: #7fb0de; letter-spacing: 2px;
+      line-height: 2.1; opacity: 0; text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(84,160,232,0.4);
       transition: opacity 1s ease-out 0.3s;
     }
     .content-inner.visible h2,
@@ -113,6 +125,25 @@
     }
     .transition-overlay canvas { width: 100%; height: 100%; }
 
+    /* Archway scene blurb (the "second section") */
+    .archway-text {
+      position: fixed; inset: 0; z-index: 4; opacity: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 0 8vw; pointer-events: none;
+      transition: opacity 0.15s linear;
+    }
+    .archway-text h3 {
+      font-family: var(--crt); font-weight: 400;
+      font-size: clamp(30px, 6vw, 70px); letter-spacing: 1px; line-height: 1.0;
+      color: #e2f0ff; max-width: 18ch;
+      text-shadow: 0 0 18px rgba(84,160,232,0.65), 0 0 46px rgba(84,160,232,0.32);
+    }
+    .archway-text p {
+      font-family: var(--mono); margin-top: 24px; max-width: 54ch;
+      font-size: clamp(12px, 1.5vw, 15px); line-height: 1.95; color: #a6ccef;
+      text-shadow: 0 0 10px rgba(84,160,232,0.35);
+    }
+
     /* ASCII glitch transition out of the boot screen */
     #glitch {
       position: fixed; inset: 0; z-index: 600; display: none;
@@ -166,8 +197,8 @@
     #profile {
       position: relative; z-index: 10; max-width: 760px; margin: 0 auto;
       padding: 16vh 22px 22vh; color: #4dffab;
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: clamp(12px, 1.5vw, 14px); line-height: 1.85;
+      font-family: var(--mono);
+      font-size: clamp(13px, 1.55vw, 15px); line-height: 1.85;
       text-shadow: 0 0 4px rgba(77,255,171,0.5);
     }
     .panel {
@@ -179,22 +210,23 @@
     }
     .panel.in { opacity: 1; transform: none; }
     .panel-title {
-      position: absolute; top: -0.72em; left: 16px; background: #06120c; padding: 0 9px;
-      font-size: 0.78em; letter-spacing: 1.5px; color: #79ffce; text-shadow: 0 0 6px rgba(77,255,171,0.5);
+      position: absolute; top: -0.86em; left: 16px; background: #06120c; padding: 0 10px;
+      font-family: var(--crt); font-size: 1.25em; letter-spacing: 2px;
+      color: #8effd0; text-shadow: 0 0 8px rgba(77,255,171,0.55);
     }
-    .prompt-line { color: #79ffce; margin-bottom: 10px; }
-    .prompt-line .cmd { color: #daffef; }
-    .profile-name { font-size: clamp(20px,4vw,30px); color: #b6ffe0; letter-spacing: 1px; margin: 2px 0 4px; text-shadow: 0 0 10px rgba(120,255,200,0.4); }
+    .prompt-line { font-family: var(--crt); font-size: 1.3em; letter-spacing: 1px; color: #8effd0; margin-bottom: 10px; }
+    .prompt-line .cmd { color: #eafff6; }
+    .profile-name { font-family: var(--crt); font-size: clamp(44px,9vw,82px); color: #cfffe9; letter-spacing: 2px; line-height: 0.95; margin: 4px 0 6px; text-shadow: 0 0 16px rgba(120,255,200,0.5); }
     .muted { color: #2fce86; }
     .kv { display: grid; grid-template-columns: 92px 1fr; gap: 3px 14px; }
-    .kv .k { color: #36b884; }
+    .kv .k { font-family: var(--crt); font-size: 1.2em; letter-spacing: 1px; color: #5fd6a0; }
     .row { display: flex; gap: 14px; padding: 7px 0; border-bottom: 1px dashed rgba(47,206,134,0.18); }
     .row:last-child { border-bottom: none; }
-    .row .when { color: #36b884; min-width: 96px; flex: none; }
+    .row .when { font-family: var(--crt); font-size: 1.18em; letter-spacing: 0.5px; color: #5fd6a0; min-width: 112px; flex: none; }
     .row .what b { color: #b6ffe0; }
     .press a { display: block; padding: 7px 0; border-bottom: 1px dashed rgba(47,206,134,0.18); }
     .press a:last-child { border-bottom: none; }
-    .press .src { color: #79ffce; }
+    .press .src { font-family: var(--crt); font-size: 1.18em; letter-spacing: 0.5px; color: #8effd0; }
     a.lnk { color: #93ffd6; text-decoration: none; border-bottom: 1px solid rgba(120,255,200,0.3); transition: color 0.15s, border-color 0.15s; }
     a.lnk:hover { color: #eafff6; border-bottom-color: #eafff6; }
     details.post { border-bottom: 1px dashed rgba(47,206,134,0.18); padding: 9px 0; }
@@ -256,6 +288,11 @@
 
 <div class="archway-section" id="archway-section">
   <canvas id="canvas-archway"></canvas>
+</div>
+
+<div class="archway-text" id="archway-text">
+  <h3>I build the rooms where the future gets made.</h3>
+  <p>Accelr8 is home base for San Francisco's AI founders &mdash; 200+ events, 40,000+ people through the door, 178 alumni who've raised over $100M. I run the programs, cook the dinners, and ship the software that holds it together.</p>
 </div>
 
 <div class="transition-overlay" id="transition-overlay">
@@ -369,6 +406,7 @@ const contentLayer = document.querySelector('.content-layer');
 const archwaySection = document.getElementById('archway-section');
 const blueBgSection = document.getElementById('blue-bg-section');
 const crtOverlay = document.getElementById('crt-overlay');
+const archwayText = document.getElementById('archway-text');
 const boot = document.getElementById('boot');
 const bootLog = document.getElementById('boot-log');
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -795,6 +833,15 @@ function render() {
   const termProgress = Math.max(0, Math.min((currentProgress - ZOOM_END) / (1.0 - ZOOM_END), 1));
 
   crtOverlay.style.opacity = termProgress;
+
+  // Archway scene blurb fades in over the archway, out as the zoom/portal begins
+  let atOp = 0;
+  if (currentProgress > 0.40 && currentProgress < 0.555) {
+    const fin = Math.min((currentProgress - 0.40) / 0.045, 1);
+    const fout = Math.max(0, 1 - (currentProgress - 0.51) / 0.045);
+    atOp = Math.min(fin, fout);
+  }
+  archwayText.style.opacity = atOp;
 
   // Resize pillar canvases during push
   if (pushProgress > 0 && pushProgress < 1) {
