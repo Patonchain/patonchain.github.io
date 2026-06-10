@@ -294,7 +294,7 @@ const CHARSETS = {
 let ASCII_CHARS = CHARSETS.classic;
 const FONT_SIZE = 14;
 const CHAR_ASPECT = 0.55;
-const LERP_FACTOR = 0.12;
+const LERP_FACTOR = 0.16;
 
 const videoPillars = document.getElementById('video-pillars');
 const videoArchway = document.getElementById('video-archway');
@@ -482,7 +482,7 @@ function createAsciiRenderer(canvasEl, sourceEl, cropX, cropW, darkThreshold, sa
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
   function resize() {
-    const dpr = Math.min(window.devicePixelRatio, 2);
+    const dpr = Math.min(window.devicePixelRatio, 1.5);
     canvasEl.width = canvasEl.clientWidth * dpr;
     canvasEl.height = canvasEl.clientHeight * dpr;
     gl.viewport(0, 0, canvasEl.width, canvasEl.height);
@@ -663,8 +663,8 @@ function easeInOutCubic(t) {
 }
 
 function seekVideo(videoEl, target, state) {
-  if (state.seeking && performance.now() - state.t > 400) state.seeking = false;
-  if (!state.seeking && Math.abs(videoEl.currentTime - target) > 0.03) {
+  if (state.seeking && performance.now() - state.t > 120) state.seeking = false;
+  if (!state.seeking && Math.abs(videoEl.currentTime - target) > 0.018) {
     state.seeking = true;
     state.t = performance.now();
     videoEl.currentTime = target;
