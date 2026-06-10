@@ -804,7 +804,7 @@ function render() {
   progressBar.style.width = (currentProgress * 100) + '%';
   scrollHint.style.opacity = currentProgress < 0.03 ? '1' : '0';
 
-  if (pillarProgress > 0.15 && pillarProgress < 0.9 && pushProgress < 0.2) {
+  if (pillarProgress < 0.9 && pushProgress < 0.2) {
     contentInner.classList.add('visible');
   } else {
     contentInner.classList.remove('visible');
