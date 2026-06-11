@@ -219,7 +219,7 @@
     /* ===== Profile: retro ASCII terminal (normal scroll, over the green CRT) ===== */
     #profile {
       position: relative; z-index: 10; max-width: 760px; margin: 0 auto;
-      padding: 16vh 22px 22vh; color: #79c2ff;
+      padding: 9vh 22px 20vh; color: #79c2ff;
       font-family: var(--mono);
       font-size: clamp(13px, 1.55vw, 15px); line-height: 1.85;
       text-shadow: 0 0 4px rgba(120,185,255,0.5);
@@ -347,7 +347,7 @@
     <p style="margin-top:12px;color:#5aa6e0;line-height:1.95">
       I build in-person communities for the people building AI, and the software that runs them.
       Co-founder of <a class="lnk" href="https://joinaccelr8.com">Accelr8</a>, a hacker-house network for founders.
-      Before that: on the programming team at ETHDenver (20k+), growth at Questbook, a decade of taking things
+      Before that: GP at NoCap, the first AI-led VC fund, growth at Questbook, a decade of taking things
       from zero to one. I ship with Claude every day.
     </p>
     <div class="kv" style="margin-top:14px">
@@ -384,7 +384,7 @@
     <i class="corner tl"><svg><use href="#orn"/></svg></i><i class="corner tr"><svg><use href="#orn"/></svg></i><i class="corner bl"><svg><use href="#orn"/></svg></i><i class="corner br"><svg><use href="#orn"/></svg></i><span class="panel-title"><svg class="tic"><use href="#ic-timeline"/></svg>~/timeline</span>
     <div class="prompt-line"><span class="muted">santiago@accelr8</span>:~$ <span class="cmd">git log --oneline work/</span></div>
     <div class="row"><span class="when">2024 &mdash; now</span><span class="what"><b>Accelr8</b> &middot; Co-Founder. SF hacker-house network for AI founders.</span></div>
-    <div class="row"><span class="when">2022 &mdash; 2024</span><span class="what"><b>ETHDenver</b> &middot; Programming &amp; production team. Main-stage + side events, 20k+ attendees.</span></div>
+    <div class="row"><span class="when">2025 &mdash; 2026</span><span class="what"><b>NoCap</b> &middot; General Partner. Ran NC/ACC, a 5,000-founder global accelerator, to an exit (YC-backed).</span></div>
     <div class="row"><span class="when">2023 &mdash; 2024</span><span class="what"><b>Questbook</b> &middot; Head of Product Growth. $10M+ in developer grant programs.</span></div>
     <div class="row"><span class="when">2022 &mdash; 2023</span><span class="what"><b>Layerr</b> &middot; Head of Product Growth. Led the Portalpunks launch.</span></div>
     <div class="row"><span class="when">2020 &mdash; 2021</span><span class="what"><b>Solarper</b> &middot; Founder. Built and sold a solar-procurement SaaS.</span></div>
@@ -448,10 +448,10 @@ const bootLog = document.getElementById('boot-log');
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 // Phase boundaries
-const PILLAR_END = 0.25;
-const PUSH_END = 0.35;
-const ARCHWAY_END = 0.55;
-const ZOOM_END = 0.65;     // quick zoom in + swap
+const PILLAR_END = 0.34;
+const PUSH_END = 0.47;
+const ARCHWAY_END = 0.74;
+const ZOOM_END = 0.92;     // quick zoom in + swap
 // 0.65–1.0: blue ASCII bg + terminal cards
 
 charsetSelect.value = 'classic';
@@ -872,9 +872,9 @@ function render() {
 
   // Archway scene blurb fades in over the archway, out as the zoom/portal begins
   let atOp = 0;
-  if (currentProgress > 0.40 && currentProgress < 0.555) {
-    const fin = Math.min((currentProgress - 0.40) / 0.045, 1);
-    const fout = Math.max(0, 1 - (currentProgress - 0.51) / 0.045);
+  if (currentProgress > 0.55 && currentProgress < 0.735) {
+    const fin = Math.min((currentProgress - 0.55) / 0.045, 1);
+    const fout = Math.max(0, 1 - (currentProgress - 0.70) / 0.035);
     atOp = Math.min(fin, fout);
   }
   archwayText.style.opacity = atOp;
@@ -1011,7 +1011,7 @@ function glitchOut() {
     await sleep(140);
     await step('resolving dependencies', null, 620);
     await step('fetching packages', null, 640);
-    add('<span class="dim">+ accelr8  + ethdenver  + frontier-tower  + claw-con</span>');
+    add('<span class="dim">+ accelr8  + nocap  + frontier-tower  + claw-con</span>');
     await sleep(150);
     add('<span class="dim">+ 200-events  + 178-alumni  + $100M-raised</span>');
     await sleep(150);
