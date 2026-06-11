@@ -25,7 +25,7 @@
       color: #e8e8e0;
       font-family: var(--mono);
     }
-    .scroll-container { height: 800vh; }
+    .scroll-container { height: 1150vh; }
 
     .pillar {
       position: fixed;
@@ -176,10 +176,10 @@
 
     /* ===== Boot / loading screen ===== */
     #boot {
-      position: fixed; inset: 0; z-index: 500; background: #05100a;
+      position: fixed; inset: 0; z-index: 500; background: #050a16;
       display: flex; align-items: center; justify-content: center;
       font-family: var(--mono);
-      color: #4dffab; transition: opacity 0.6s ease-out;
+      color: #79c2ff; transition: opacity 0.6s ease-out;
     }
     #boot.done { opacity: 0; pointer-events: none; }
     #boot::after {
@@ -190,14 +190,14 @@
     }
     .boot-inner {
       width: min(560px, 86vw); font-size: clamp(11px, 1.5vw, 13px);
-      line-height: 1.95; text-shadow: 0 0 5px rgba(77,255,171,0.5);
+      line-height: 1.95; text-shadow: 0 0 5px rgba(120,185,255,0.5);
     }
     .boot-line { white-space: pre-wrap; }
-    .boot-line .ok { color: #aaffe0; }
-    .boot-line .dim { color: #2fce86; }
+    .boot-line .ok { color: #cfe6ff; }
+    .boot-line .dim { color: #4790d6; }
     .boot-cursor, .crt-cursor {
-      display: inline-block; width: 0.55em; height: 1em; background: #4dffab;
-      box-shadow: 0 0 9px rgba(77,255,171,0.7); vertical-align: -0.15em;
+      display: inline-block; width: 0.55em; height: 1em; background: #79c2ff;
+      box-shadow: 0 0 9px rgba(120,185,255,0.7); vertical-align: -0.15em;
       animation: crtblink 1.05s step-end infinite;
     }
     @keyframes crtblink { 50% { opacity: 0; } }
@@ -211,58 +211,58 @@
     }
     #crt-overlay::after {
       content: ''; position: absolute; inset: 0;
-      background: radial-gradient(135% 120% at 50% 50%, rgba(70,255,170,0.04) 0%, rgba(0,0,0,0) 44%, rgba(0,0,0,0.6) 100%);
-      box-shadow: inset 0 0 190px rgba(0,0,0,0.8), inset 0 0 44px rgba(70,255,170,0.1);
+      background: radial-gradient(135% 120% at 50% 50%, rgba(110,175,255,0.04) 0%, rgba(0,0,0,0) 44%, rgba(0,0,0,0.6) 100%);
+      box-shadow: inset 0 0 190px rgba(0,0,0,0.8), inset 0 0 44px rgba(110,175,255,0.1);
       animation: flicker 5s steps(48) infinite;
     }
 
     /* ===== Profile: retro ASCII terminal (normal scroll, over the green CRT) ===== */
     #profile {
       position: relative; z-index: 10; max-width: 760px; margin: 0 auto;
-      padding: 16vh 22px 22vh; color: #4dffab;
+      padding: 16vh 22px 22vh; color: #79c2ff;
       font-family: var(--mono);
       font-size: clamp(13px, 1.55vw, 15px); line-height: 1.85;
-      text-shadow: 0 0 4px rgba(77,255,171,0.5);
+      text-shadow: 0 0 4px rgba(120,185,255,0.5);
     }
     .panel {
-      position: relative; border: 2px double #2fce86; background: rgba(4,16,10,0.74);
-      box-shadow: 0 0 40px rgba(47,206,134,0.1), inset 0 0 40px rgba(0,0,0,0.55);
+      position: relative; border: 2px double #4790d6; background: rgba(6,13,28,0.74);
+      box-shadow: 0 0 40px rgba(66,130,210,0.1), inset 0 0 40px rgba(0,0,0,0.55);
       padding: 24px clamp(16px,3vw,28px); margin-bottom: 30px;
       opacity: 0; transform: translateY(18px);
       transition: opacity 0.6s cubic-bezier(0,0,0.2,1), transform 0.6s cubic-bezier(0,0,0.2,1);
     }
     .panel.in { opacity: 1; transform: none; }
     .panel-title {
-      position: absolute; top: -0.72em; left: 16px; background: #06120c; padding: 0 10px;
+      position: absolute; top: -0.72em; left: 16px; background: #07101e; padding: 0 10px;
       font-family: var(--mono); font-weight: 600; font-size: 0.82em; letter-spacing: 2px;
-      color: #8effd0; text-shadow: 0 0 8px rgba(77,255,171,0.55);
+      color: #9ed4ff; text-shadow: 0 0 8px rgba(120,185,255,0.55);
     }
-    .prompt-line { font-family: var(--mono); font-weight: 600; letter-spacing: 0.5px; color: #8effd0; margin-bottom: 10px; }
-    .prompt-line .cmd { color: #eafff6; }
-    .profile-name { font-family: var(--disp); font-size: clamp(34px,6.6vw,64px); color: #cfffe9; letter-spacing: 0.5px; line-height: 0.95; margin: 6px 0 8px; text-shadow: 0 0 16px rgba(120,255,200,0.45); }
-    .muted { color: #2fce86; }
+    .prompt-line { font-family: var(--mono); font-weight: 600; letter-spacing: 0.5px; color: #9ed4ff; margin-bottom: 10px; }
+    .prompt-line .cmd { color: #eaf4ff; }
+    .profile-name { font-family: var(--disp); font-size: clamp(34px,6.6vw,64px); color: #d6ecff; letter-spacing: 0.5px; line-height: 0.95; margin: 6px 0 8px; text-shadow: 0 0 16px rgba(130,190,255,0.45); }
+    .muted { color: #4790d6; }
     .kv { display: grid; grid-template-columns: 92px 1fr; gap: 3px 14px; }
-    .kv .k { font-family: var(--mono); font-weight: 600; letter-spacing: 0.5px; color: #5fd6a0; }
-    .row { display: flex; gap: 14px; padding: 7px 0; border-bottom: 1px dashed rgba(47,206,134,0.18); }
+    .kv .k { font-family: var(--mono); font-weight: 600; letter-spacing: 0.5px; color: #5aa6e0; }
+    .row { display: flex; gap: 14px; padding: 7px 0; border-bottom: 1px dashed rgba(66,130,210,0.18); }
     .row:last-child { border-bottom: none; }
-    .row .when { font-family: var(--mono); font-weight: 600; letter-spacing: 0.5px; color: #5fd6a0; min-width: 104px; flex: none; }
-    .row .what b { color: #b6ffe0; }
-    .press a { display: block; padding: 7px 0; border-bottom: 1px dashed rgba(47,206,134,0.18); }
+    .row .when { font-family: var(--mono); font-weight: 600; letter-spacing: 0.5px; color: #5aa6e0; min-width: 104px; flex: none; }
+    .row .what b { color: #cfe6ff; }
+    .press a { display: block; padding: 7px 0; border-bottom: 1px dashed rgba(66,130,210,0.18); }
     .press a:last-child { border-bottom: none; }
-    .press .src { font-family: var(--mono); font-weight: 600; letter-spacing: 0.3px; color: #8effd0; }
-    a.lnk { color: #93ffd6; text-decoration: none; border-bottom: 1px solid rgba(120,255,200,0.3); transition: color 0.15s, border-color 0.15s; }
-    a.lnk:hover { color: #eafff6; border-bottom-color: #eafff6; }
-    details.post { border-bottom: 1px dashed rgba(47,206,134,0.18); padding: 9px 0; }
+    .press .src { font-family: var(--mono); font-weight: 600; letter-spacing: 0.3px; color: #9ed4ff; }
+    a.lnk { color: #8cc6ff; text-decoration: none; border-bottom: 1px solid rgba(130,190,255,0.3); transition: color 0.15s, border-color 0.15s; }
+    a.lnk:hover { color: #eaf4ff; border-bottom-color: #eaf4ff; }
+    details.post { border-bottom: 1px dashed rgba(66,130,210,0.18); padding: 9px 0; }
     details.post:last-child { border-bottom: none; }
-    details.post > summary { cursor: pointer; list-style: none; color: #93ffd6; outline: none; }
+    details.post > summary { cursor: pointer; list-style: none; color: #8cc6ff; outline: none; }
     details.post > summary::-webkit-details-marker { display: none; }
-    details.post > summary::before { content: '> '; color: #36b884; }
+    details.post > summary::before { content: '> '; color: #4282c4; }
     details.post[open] > summary::before { content: 'v '; }
-    details.post .date { color: #2a9e69; font-size: 0.85em; }
-    details.post .body { color: #41dc94; padding: 12px 2px 6px; line-height: 1.95; }
+    details.post .date { color: #3a6fae; font-size: 0.85em; }
+    details.post .body { color: #5aa6e0; padding: 12px 2px 6px; line-height: 1.95; }
     details.post .body p { margin: 0 0 0.95em; }
     details.post .body p:last-child { margin-bottom: 0; }
-    .crt-cursor2 { display: inline-block; width: 0.55em; height: 1em; background: #4dffab; box-shadow: 0 0 9px rgba(77,255,171,0.7); vertical-align: -0.15em; animation: crtblink 1.05s step-end infinite; }
+    .crt-cursor2 { display: inline-block; width: 0.55em; height: 1em; background: #79c2ff; box-shadow: 0 0 9px rgba(120,185,255,0.7); vertical-align: -0.15em; animation: crtblink 1.05s step-end infinite; }
 
     @keyframes scanmove { to { background-position: 0 -160px; } }
     @keyframes flicker {
@@ -279,9 +279,9 @@
     /* Lopaka-style pixel icons + pixel art-nouveau corners */
     #pix-sprite rect { fill: currentColor; }
     .tic { width: 0.95em; height: 0.95em; vertical-align: -0.12em; margin-right: 8px;
-      color: #8effd0; filter: drop-shadow(0 0 3px rgba(125,255,176,0.55)); shape-rendering: crispEdges; }
-    .corner { position: absolute; width: 22px; height: 22px; pointer-events: none; color: #43c98a; z-index: 2;
-      filter: drop-shadow(0 0 2px rgba(70,255,170,0.5)); }
+      color: #9ed4ff; filter: drop-shadow(0 0 3px rgba(120,185,255,0.55)); shape-rendering: crispEdges; }
+    .corner { position: absolute; width: 22px; height: 22px; pointer-events: none; color: #4a8fd0; z-index: 2;
+      filter: drop-shadow(0 0 2px rgba(110,175,255,0.5)); }
     .corner svg { width: 100%; height: 100%; shape-rendering: crispEdges; }
     .corner.tl { top: -3px; left: -3px; }
     .corner.tr { top: -3px; right: -3px; transform: scaleX(-1); }
@@ -344,7 +344,7 @@
     <div class="prompt-line"><span class="muted">santiago@accelr8</span>:~$ <span class="cmd">whoami</span></div>
     <div class="profile-name">Patrick Santiago</div>
     <div class="muted">founder &amp; operator &middot; San Francisco</div>
-    <p style="margin-top:12px;color:#41dc94;line-height:1.95">
+    <p style="margin-top:12px;color:#5aa6e0;line-height:1.95">
       I build in-person communities for the people building AI, and the software that runs them.
       Co-founder of <a class="lnk" href="https://joinaccelr8.com">Accelr8</a>, a hacker-house network for founders.
       Before that: on the programming team at ETHDenver (20k+), growth at Questbook, a decade of taking things
@@ -364,7 +364,7 @@
     <div class="kv">
       <span class="k">events</span><span>200+ hosted in two years</span>
       <span class="k">audience</span><span>40,000+ attendees</span>
-      <span class="k">alumni</span><span>178 founders &middot; <b style="color:#b6ffe0">$100M+</b> raised</span>
+      <span class="k">alumni</span><span>178 founders &middot; <b style="color:#cfe6ff">$100M+</b> raised</span>
       <span class="k">network</span><span>4 buildings &middot; 206 rooms</span>
       <span class="k">funds</span><span>YC &middot; a16z &middot; Lightspeed &middot; Founders Inc</span>
     </div>
@@ -428,7 +428,7 @@ const CHARSETS = {
 let ASCII_CHARS = CHARSETS.classic;
 const FONT_SIZE = 14;
 const CHAR_ASPECT = 0.55;
-const LERP_FACTOR = 0.16;
+const LERP_FACTOR = 0.095;
 
 const videoPillars = document.getElementById('video-pillars');
 const videoArchway = document.getElementById('video-archway');
@@ -477,9 +477,9 @@ const blueSource = document.createElement('canvas');
 blueSource.width = 64; blueSource.height = 64;
 const blueCtx = blueSource.getContext('2d');
 const grad = blueCtx.createLinearGradient(0, 0, 64, 64);
-grad.addColorStop(0, '#12613f');
-grad.addColorStop(0.5, '#1c8a59');
-grad.addColorStop(1, '#12613f');
+grad.addColorStop(0, '#16456f');
+grad.addColorStop(0.5, '#1e63a0');
+grad.addColorStop(1, '#16456f');
 blueCtx.fillStyle = grad;
 blueCtx.fillRect(0, 0, 64, 64);
 
@@ -945,7 +945,7 @@ function glitchOut() {
       if (t >= 1) { gc.style.display = 'none'; resolve(); return; }
       const w = gc.width, h = gc.height;
       const intensity = Math.sin(Math.min(t / 0.7, 1) * Math.PI);
-      ctx.fillStyle = '#040d08'; ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = '#04101c'; ctx.fillRect(0, 0, w, h);
 
       // CRT collapse near the end: clip to a shrinking horizontal band
       let bandH = h;
@@ -966,7 +966,7 @@ function glitchOut() {
           const ch = GLYPHS[(Math.random() * GLYPHS.length) | 0];
           const x = rx * colW + shift, y = ry * cell;
           ctx.fillStyle = 'rgba(255,60,90,' + (0.45 * intensity) + ')'; ctx.fillText(ch, x - split, y);
-          ctx.fillStyle = 'rgba(70,255,170,' + (0.9 * intensity) + ')';  ctx.fillText(ch, x, y);
+          ctx.fillStyle = 'rgba(110,175,255,' + (0.9 * intensity) + ')';  ctx.fillText(ch, x, y);
           ctx.fillStyle = 'rgba(60,150,255,' + (0.45 * intensity) + ')'; ctx.fillText(ch, x + split, y);
         }
       }
@@ -981,7 +981,7 @@ function glitchOut() {
 
       // bright scan-collapse line
       if (t > 0.78) {
-        ctx.fillStyle = 'rgba(190,255,225,' + (1 - (t - 0.78) / 0.22) + ')';
+        ctx.fillStyle = 'rgba(200,228,255,' + (1 - (t - 0.78) / 0.22) + ')';
         ctx.fillRect(0, yTop + bandH / 2 - 1, w, 2);
       }
       requestAnimationFrame(frame);
