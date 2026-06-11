@@ -275,6 +275,18 @@
       .panel { transition: opacity 0.3s ease-out; }
       #boot { transition: none; }
     }
+
+    /* Lopaka-style pixel icons + pixel art-nouveau corners */
+    #pix-sprite rect { fill: currentColor; }
+    .tic { width: 0.95em; height: 0.95em; vertical-align: -0.12em; margin-right: 8px;
+      color: #8effd0; filter: drop-shadow(0 0 3px rgba(125,255,176,0.55)); shape-rendering: crispEdges; }
+    .corner { position: absolute; width: 22px; height: 22px; pointer-events: none; color: #43c98a; z-index: 2;
+      filter: drop-shadow(0 0 2px rgba(70,255,170,0.5)); }
+    .corner svg { width: 100%; height: 100%; shape-rendering: crispEdges; }
+    .corner.tl { top: -3px; left: -3px; }
+    .corner.tr { top: -3px; right: -3px; transform: scaleX(-1); }
+    .corner.bl { bottom: -3px; left: -3px; transform: scaleY(-1); }
+    .corner.br { bottom: -3px; right: -3px; transform: scale(-1,-1); }
   </style>
 </head>
 <body>
@@ -325,9 +337,10 @@
 <div id="crt-overlay"></div>
 
 <main id="profile">
+<svg id="pix-sprite" aria-hidden="true" width="0" height="0" style="position:absolute" shape-rendering="crispEdges"><symbol id="ic-whoami" viewBox="0 0 16 16"><rect x="5" y="1" width="6" height="1"/><rect x="4" y="2" width="2" height="1"/><rect x="10" y="2" width="2" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="11" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="11" y="4" width="1" height="1"/><rect x="4" y="5" width="2" height="1"/><rect x="10" y="5" width="2" height="1"/><rect x="5" y="6" width="6" height="1"/><rect x="7" y="7" width="2" height="1"/><rect x="6" y="8" width="4" height="1"/><rect x="4" y="9" width="8" height="1"/><rect x="3" y="10" width="10" height="1"/><rect x="2" y="11" width="12" height="1"/><rect x="2" y="12" width="1" height="1"/><rect x="13" y="12" width="1" height="1"/><rect x="2" y="13" width="1" height="1"/><rect x="13" y="13" width="1" height="1"/></symbol><symbol id="ic-stats" viewBox="0 0 16 16"><rect x="14" y="1" width="1" height="1"/><rect x="14" y="2" width="1" height="1"/><rect x="10" y="3" width="1" height="1"/><rect x="14" y="3" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="14" y="4" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="14" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="14" y="6" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="14" y="7" width="1" height="1"/><rect x="2" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="10" y="8" width="1" height="1"/><rect x="14" y="8" width="1" height="1"/><rect x="2" y="9" width="1" height="1"/><rect x="6" y="9" width="1" height="1"/><rect x="10" y="9" width="1" height="1"/><rect x="14" y="9" width="1" height="1"/><rect x="2" y="10" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/><rect x="14" y="10" width="1" height="1"/><rect x="2" y="11" width="1" height="1"/><rect x="6" y="11" width="1" height="1"/><rect x="10" y="11" width="1" height="1"/><rect x="14" y="11" width="1" height="1"/><rect x="2" y="12" width="1" height="1"/><rect x="6" y="12" width="1" height="1"/><rect x="10" y="12" width="1" height="1"/><rect x="14" y="12" width="1" height="1"/><rect x="1" y="13" width="14" height="1"/></symbol><symbol id="ic-press" viewBox="0 0 16 16"><rect x="2" y="1" width="10" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="11" y="2" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="4" y="3" width="2" height="1"/><rect x="8" y="3" width="2" height="1"/><rect x="11" y="3" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="4" y="4" width="2" height="1"/><rect x="8" y="4" width="2" height="1"/><rect x="11" y="4" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="11" y="5" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="4" y="6" width="6" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="11" y="7" width="1" height="1"/><rect x="2" y="8" width="1" height="1"/><rect x="4" y="8" width="6" height="1"/><rect x="11" y="8" width="1" height="1"/><rect x="2" y="9" width="1" height="1"/><rect x="11" y="9" width="1" height="1"/><rect x="2" y="10" width="1" height="1"/><rect x="4" y="10" width="4" height="1"/><rect x="11" y="10" width="1" height="1"/><rect x="2" y="11" width="1" height="1"/><rect x="11" y="11" width="1" height="1"/><rect x="2" y="12" width="10" height="1"/></symbol><symbol id="ic-timeline" viewBox="0 0 16 16"><rect x="6" y="0" width="4" height="1"/><rect x="4" y="1" width="2" height="1"/><rect x="10" y="1" width="2" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="12" y="2" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="13" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="14" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="14" y="5" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="6" y="6" width="5" height="1"/><rect x="14" y="6" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="14" y="7" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="14" y="8" width="1" height="1"/><rect x="2" y="9" width="1" height="1"/><rect x="13" y="9" width="1" height="1"/><rect x="3" y="10" width="1" height="1"/><rect x="12" y="10" width="1" height="1"/><rect x="4" y="11" width="2" height="1"/><rect x="10" y="11" width="2" height="1"/><rect x="6" y="12" width="4" height="1"/></symbol><symbol id="ic-connect" viewBox="0 0 16 16"><rect x="7" y="0" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="10" y="3" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="11" y="4" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="9" y="5" width="1" height="1"/><rect x="12" y="5" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="9" y="6" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="7" y="9" width="1" height="1"/><rect x="7" y="10" width="1" height="1"/><rect x="6" y="11" width="3" height="1"/><rect x="5" y="12" width="5" height="1"/></symbol><symbol id="orn" viewBox="0 0 18 18"><rect x="1" y="1" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="1" y="3" width="2" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="9" y="6" width="4" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="7" y="7" width="2" height="1"/><rect x="13" y="7" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="5" y="8" width="2" height="1"/><rect x="13" y="8" width="1" height="1"/><rect x="1" y="9" width="1" height="1"/><rect x="12" y="9" width="1" height="1"/><rect x="1" y="10" width="1" height="1"/><rect x="11" y="10" width="1" height="1"/><rect x="1" y="11" width="1" height="1"/><rect x="9" y="11" width="2" height="1"/><rect x="1" y="12" width="1" height="1"/><rect x="6" y="12" width="3" height="1"/><rect x="1" y="13" width="1" height="1"/><rect x="4" y="13" width="3" height="1"/><rect x="1" y="14" width="3" height="1"/><rect x="1" y="15" width="1" height="1"/><rect x="1" y="16" width="1" height="1"/></symbol></svg>
 
   <section class="panel" data-panel>
-    <span class="panel-title">~/whoami</span>
+    <i class="corner tl"><svg><use href="#orn"/></svg></i><i class="corner tr"><svg><use href="#orn"/></svg></i><i class="corner bl"><svg><use href="#orn"/></svg></i><i class="corner br"><svg><use href="#orn"/></svg></i><span class="panel-title"><svg class="tic"><use href="#ic-whoami"/></svg>~/whoami</span>
     <div class="prompt-line"><span class="muted">santiago@accelr8</span>:~$ <span class="cmd">whoami</span></div>
     <div class="profile-name">Patrick Santiago</div>
     <div class="muted">founder &amp; operator &middot; San Francisco</div>
@@ -346,7 +359,7 @@
   </section>
 
   <section class="panel" data-panel>
-    <span class="panel-title">~/accelr8/stats</span>
+    <i class="corner tl"><svg><use href="#orn"/></svg></i><i class="corner tr"><svg><use href="#orn"/></svg></i><i class="corner bl"><svg><use href="#orn"/></svg></i><i class="corner br"><svg><use href="#orn"/></svg></i><span class="panel-title"><svg class="tic"><use href="#ic-stats"/></svg>~/accelr8/stats</span>
     <div class="prompt-line"><span class="muted">santiago@accelr8</span>:~$ <span class="cmd">cat stats.log</span></div>
     <div class="kv">
       <span class="k">events</span><span>200+ hosted in two years</span>
@@ -358,7 +371,7 @@
   </section>
 
   <section class="panel press" data-panel>
-    <span class="panel-title">~/press</span>
+    <i class="corner tl"><svg><use href="#orn"/></svg></i><i class="corner tr"><svg><use href="#orn"/></svg></i><i class="corner bl"><svg><use href="#orn"/></svg></i><i class="corner br"><svg><use href="#orn"/></svg></i><span class="panel-title"><svg class="tic"><use href="#ic-press"/></svg>~/press</span>
     <div class="prompt-line"><span class="muted">santiago@accelr8</span>:~$ <span class="cmd">ls press/</span></div>
     <a class="lnk" target="_blank" rel="noopener" href="https://nymag.com/intelligencer/article/san-francisco-ai-boom-artificial-intelligence-tech-industry-kids.html"><span class="src">New York Magazine</span> &mdash; The AI Kids Take San Francisco</a>
     <a class="lnk" target="_blank" rel="noopener" href="https://www.businessinsider.com/managing-san-francisco-hacker-house-changed-founders-life-pros-cons-2025-11"><span class="src">Business Insider</span> &mdash; I Run a San Francisco Hacker House</a>
@@ -368,7 +381,7 @@
   </section>
 
   <section class="panel" data-panel>
-    <span class="panel-title">~/timeline</span>
+    <i class="corner tl"><svg><use href="#orn"/></svg></i><i class="corner tr"><svg><use href="#orn"/></svg></i><i class="corner bl"><svg><use href="#orn"/></svg></i><i class="corner br"><svg><use href="#orn"/></svg></i><span class="panel-title"><svg class="tic"><use href="#ic-timeline"/></svg>~/timeline</span>
     <div class="prompt-line"><span class="muted">santiago@accelr8</span>:~$ <span class="cmd">git log --oneline work/</span></div>
     <div class="row"><span class="when">2024 &mdash; now</span><span class="what"><b>Accelr8</b> &middot; Co-Founder. SF hacker-house network for AI founders.</span></div>
     <div class="row"><span class="when">2022 &mdash; 2024</span><span class="what"><b>ETHDenver</b> &middot; Programming &amp; production team. Main-stage + side events, 20k+ attendees.</span></div>
@@ -379,7 +392,7 @@
   </section>
 
   <section class="panel" data-panel>
-    <span class="panel-title">~/connect</span>
+    <i class="corner tl"><svg><use href="#orn"/></svg></i><i class="corner tr"><svg><use href="#orn"/></svg></i><i class="corner bl"><svg><use href="#orn"/></svg></i><i class="corner br"><svg><use href="#orn"/></svg></i><span class="panel-title"><svg class="tic"><use href="#ic-connect"/></svg>~/connect</span>
     <div class="prompt-line"><span class="muted">santiago@accelr8</span>:~$ <span class="cmd">./connect</span></div>
     <div class="kv">
       <span class="k">email</span><span><a class="lnk" href="mailto:pat@joinaccelr8.com">pat@joinaccelr8.com</a></span>
